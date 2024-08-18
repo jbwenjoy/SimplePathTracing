@@ -1,0 +1,37 @@
+#version 330 core
+
+out vec3 FragPos;
+out vec3 Normal;
+
+struct vertex
+{
+    vec3 aPos[1000];
+    vec3 aNormal[1000];
+    vec2 texCoords[1000];
+};
+
+
+struct mesh
+{
+	vertex verts[1000];
+    unsigned int indices[1000];
+};
+
+struct modelObj
+{
+    mesh meshes[100];
+    unsigned int objectID;
+};
+
+uniform modelObj object;
+
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+
+void main()
+{
+    FragPos = vec3(model * vec4(aPos, 1.0));
+    Normal = aNormal;
+    gl_Position = projection * view * model * vec4(aPos, 1.0);
+}
